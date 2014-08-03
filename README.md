@@ -1,4 +1,4 @@
-pun
+Random Pun
 ===
 
 Output a random pun (from punoftheday.com) by running the following command:
