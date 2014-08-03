@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pun_script=__PUN_SCRIPT__
+( "$pun_script"; echo ) >> /etc/motd.tail
+
