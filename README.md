@@ -9,3 +9,7 @@ To install the motd updater so you see a new random pun every time you ssh into 
 
 `sudo motd/setup-motd.sh`
 
+Result:
+
+![alt tag](https://raw.github.com/andrewmacheret/pun/master/motd.png)
+
