@@ -1,0 +1,4 @@
+#!/bin/bash
+
+( /home/ubuntu/pun/pun.py; echo ) >> /etc/motd.tail
+
