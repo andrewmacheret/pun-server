@@ -11,4 +11,4 @@ To install the motd updater so you see a new random pun every time you ssh into 
 
 Result:
 
-![MOTD screenshot](cube2.png?raw=true "MOTD screenshot")
+![MOTD screenshot](motd.png?raw=true "MOTD screenshot")
