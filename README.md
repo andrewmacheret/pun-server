@@ -5,7 +5,7 @@ Output a random pun (from punoftheday.com) by running the following command:
 `./pun.py`
 
 Every run, the pun will be stored in a local mongodb database `pundb` in collection `puns`.
-
+* To quickly view this collection, run: `echo 'db.puns.find()' | mongo pundb`
 
 Prereqs:
 * mongodb
