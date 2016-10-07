@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # this is the file that will be produced
 result_file="/etc/update-motd.d/70-pun"
