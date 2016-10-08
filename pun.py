@@ -20,7 +20,7 @@ except socket.timeout, e:
   sys.exit(1)
 
 # create a beautiful soup object out of the raw html (the prettify is probably not necessary)
-soup = BeautifulSoup(html_content, "lxml")
+soup = BeautifulSoup(html_content, "html.parser")
 soup.prettify()
 
 # find and print the pun... it's the text in the element: div#main-content div.dropshadow1
