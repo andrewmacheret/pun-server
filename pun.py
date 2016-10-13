@@ -30,14 +30,14 @@ pun = pun.strip()
 
 print pun
 
-try:
-  client = MongoClient()
-  db = client['pundb']
-  collection = db['puns']
-  punDict = {"full": pun}
-  collection.update(punDict, punDict, True)
-except:
-  # do nothing on insertion error
-  pass
+#try:
+#  client = MongoClient()
+#  db = client['pundb']
+#  collection = db['puns']
+#  punDict = {"full": pun}
+#  collection.update(punDict, punDict, True)
+#except:
+#  # do nothing on insertion error
+#  pass
 
 
