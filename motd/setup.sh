@@ -1,13 +1,16 @@
 #!/bin/bash -e
 
+CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd "$CURRENT_DIR"
+
 # this is the file that will be produced
 result_file="/etc/update-motd.d/70-pun"
-pun_script="$( pwd )"/pun.py
 
-# replace __PUN_SCRIPT__ in pun-motd and put the results in the intended destination
-awk -v PUN_SCRIPT="${pun_script}" '{gsub("__PUN_SCRIPT__", PUN_SCRIPT); print}' motd/pun-motd > "$result_file" || exit 1
+# copy pun-motd to the intended destination
+echo "Copying pun-motd to $result_file ..."
+cp pun-motd "$result_file"
 
 # make sure ownership and permissions are good enough (probably unnecessary)
-chown root:root "$result_file" || exit 1
-chmod +x "$result_file" || exit 1
-
+echo "Setting ownership and permissions on $result_file ..."
+chown root:root "$result_file"
+chmod +x "$result_file"

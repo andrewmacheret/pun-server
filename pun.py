@@ -7,7 +7,7 @@ import socket
 import sys
 #import re
 from bs4 import BeautifulSoup
-from pymongo import MongoClient
+#from pymongo import MongoClient
 
 # read the html content of the random pun page into a string
 try:

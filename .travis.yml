@@ -1,0 +1,53 @@
+sudo: required
+
+language: node_js
+
+node_js:
+  - '6'
+
+addons:
+  ssh_known_hosts: servers.andrewmacheret.com
+
+env:
+  global:
+    # DOCKER_USERNAME and DOCKER_PASSWORD
+    - secure: "d1li1GJnUwEVLoqlCm/X8UZHGLce992hR5Q6ImGFwZAmVBS/7XU+3QjtgYdRxC7lD0UzgF340jd4aHE9+EbMeOnSpN9lZ+vMI3bWzYEwyFfV5dsUCHDC5NCNGHku/yIG6FXYflN5dDRLqoh3fnmFSj6mTrxWlZ8lR9ilmqd50wEebmG7JclfafjNHh9nYYTA32ZCvl76pq2GBmrE0p53dTICtlmvmirB+QG5OufMvUdYWXA08aocBoMS7cgpxjT6A2gdziRG92Oa5HGxtMQXMtBU+yigQQgOaxNUhPhxIhCYC5RPvFktiPl7F8zwGS/k7bWtLs5fe3EKsPfROdKQCSExzQ6X7WPWxmeLcpQax0sjGxcs1tK3esRDaeug0qsExYzObjc7gijrpgeVGWGs5WNQhCpASrlGyHX8x68ufP6kHpu0M8zwe68nWClfpoAUwJTfEvzp/VvcwVsDSqVieCZLl35Fax0iTAYykaxGoLAuB497OzOw4+m0nfQ6OQGlrH9fsqyekf+HKFKksBlDiIGP3XkxefqB0L8vd4XkSBSMp2cpPwdEj7XxBG2pFR+3E07Mnr/eL8AbXDb+QUl9JD9sXLN7o6jp533runPglGMLN/R9Ao8h5Cj5JkiO9yXBYJZhazGoJyyR1elTra1zI9OfGLEFM33nh0EbXA7i0gY="
+    - secure: "byZmVSRQPVuz3fe/qIueE1TwPvdzX9MLR6KZ9jbxQBcNg6/SxGXFUubLY2frmWcL8gTzMoLA7rtAqjzrdU9KyLNFurm+GzRDYyTP5FrLcY6asSHe9IrtZNrpAOD/4K4TH11x7k0WkVGjrIHnqud5juelAtn6eWq+E7DMeIUhLwCJiaZNm8sxjCMBsI6P6MNxM4JiKF3MPGyMPFm7SgHS2lv22mKhtie1YYeDBR284krcogo8KNsOljL5x4uqvtVkaT3oKD0MbbuQD9PhoVbTe9+Ow4tTey4jJXY1C3XdG+S34hcKTOtsvJnZsnwzO+a5w8XWpuj2H6c+EKaLnJY3qRwsw0H5+dnUVnxWian696F6mwg+znZJjzlaUYMqBW0N8Mieqrlkb36Y5/boF0DPoyxRVqqDmWbXsoLpNXxjBFx/JskgfbcwU0Xi+1NVH2VP1Z0SDTe73H/Y/Ns1wtOOwWmlGIRATMFrwcOLuvk1O4cQN6eeOugzQ+KPI1BxBcHTjyeNrpBVd2IZe6Kcr90j7ZeTfVtjo8Qf70bE91ermu3KDF1viuG+0DjS6LX3KwMWY0/KeH+2WNdUVEPmweznsDMtzOlYe7z6z9OeYutauIaZJAMHEeuZbItdtQZFl3oqSrPbb2t/31EM6wnISyfMK0udi6Ylo6JtZ3snnXitKw0="
+    - SERVICE_NAME='pun'
+    - CONTAINER_NAME='pun-server'
+    - VERSION=1.0
+    - TEST_PORT='9999'
+
+services:
+  - docker
+
+install:
+  # install dependencies
+  - set -e
+  - npm install
+
+script:
+  # build and test
+  - set -e
+  - docker build -t "${DOCKER_USERNAME}/${CONTAINER_NAME}":latest .
+  - docker run -d --name "${CONTAINER_NAME}" -p "${TEST_PORT}":80 "${DOCKER_USERNAME}/${CONTAINER_NAME}"
+  - sleep 1
+
+  - docker exec -it "${CONTAINER_NAME}" ./pun.py
+  - curl "http://localhost:${TEST_PORT}"
+
+  - docker rm -f "${CONTAINER_NAME}"
+
+after_success:
+  # push to docker hub
+  - set -e
+  - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
+  - docker tag "${DOCKER_USERNAME}/${CONTAINER_NAME}":latest "${DOCKER_USERNAME}/${CONTAINER_NAME}":"${VERSION}"
+  - docker push "${DOCKER_USERNAME}/${CONTAINER_NAME}":latest
+  - docker push "${DOCKER_USERNAME}/${CONTAINER_NAME}":"${VERSION}"
+  # ssh deploy
+  - openssl aes-256-cbc -K $encrypted_6855980b79fc_key -iv $encrypted_6855980b79fc_iv -in id_rsa_a1-server.enc -out "${TRAVIS_BUILD_DIR}/id_rsa_a1-server" -d
+  - eval "$(ssh-agent -s)"
+  - chmod 600 "${TRAVIS_BUILD_DIR}/id_rsa_a1-server"
+  - ssh-add "${TRAVIS_BUILD_DIR}/id_rsa_a1-server"
+  - ssh a1@servers.andrewmacheret.com "cd ~/servers/a1-server && docker-compose pull ${SERVICE_NAME} && docker-compose up -d --force-recreate ${SERVICE_NAME}"
