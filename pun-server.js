@@ -44,7 +44,7 @@ app.get('/' /*, apicache('5 minutes')*/, function(req, res) {
     if (err) {
       console.error(err);
       res.status(500);
-      res.send(req.accepts('json') ? {"error": err} : err);
+      res.send(req.accepts('application/json') ? {"error": err} : err);
       return;
     }
 
@@ -53,7 +53,7 @@ app.get('/' /*, apicache('5 minutes')*/, function(req, res) {
     }
 
     res.status(200);
-    res.send(req.accepts('json') ? {"pun": pun} : pun);
+    res.send(req.accepts('application/json') ? {"pun": pun} : pun);
   });
 });
 
