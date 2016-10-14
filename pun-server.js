@@ -40,20 +40,20 @@ app.get('/' /*, apicache('5 minutes')*/, function(req, res) {
     'Content-Type': 'application/json'
   });
 
-  run(punScript, [], function(punResponse, err) {
+  run(punScript, [], function(pun, err) {
     if (err) {
       console.error(err);
       res.status(500);
-      res.send({"error": err});
+      res.send(req.accepts('json') ? {"error": err} : err);
       return;
     }
 
-    if (punResponse) {
-      punResponse = punResponse.trim();
+    if (pun) {
+      pun = pun.trim();
     }
 
     res.status(200);
-    res.send({"pun": punResponse});
+    res.send(req.accepts('json') ? {"pun": pun} : pun);
   });
 });
 
