@@ -1,5 +1,7 @@
 # Random Pun
 
+[![Build Status](https://travis-ci.org/andrewmacheret/pun-server.svg?branch=master)](https://travis-ci.org/andrewmacheret/pun-server) [![Docker Stars](https://img.shields.io/docker/stars/andrewmacheret/pun-server.svg)](https://hub.docker.com/r/andrewmacheret/pun-server/) [![Docker Pulls](https://img.shields.io/docker/pulls/andrewmacheret/pun-server.svg)](https://hub.docker.com/r/andrewmacheret/pun-server/) [![License](https://img.shields.io/badge/license-MIT-lightgray.svg)](https://github.com/andrewmacheret/pun-server/blob/master/LICENSE.md)
+
 Output a random pun (from punoftheday.com) by running the following command:
 
 `./pun.py`
@@ -22,6 +24,7 @@ Prereqs:
 Usage:
 
 * `npm install`
+
 * `node pun-server.js`
 
 # Docker Server
