@@ -4,22 +4,43 @@ Output a random pun (from punoftheday.com) by running the following command:
 
 `./pun.py`
 
-Every run, the pun will be stored in a local mongodb database `pundb` in collection `puns`.
-* To quickly view this collection, run: `echo 'db.puns.find()' | mongo pundb`
+Prereqs:
+
+* python
+* py-bs4 (you can install it with `easy_install bs4`)
+
+Usage:
+
+* `./pun.py`
+
+# Random Pun REST Server
 
 Prereqs:
-* mongodb
-* python
 
-Setup:
-* `git clone <clone url>`
-* `sudo easy_install pymongo`
+* [Node.js](https://nodejs.org)
+
+Usage:
+
+* `npm install`
+* `node pun-server.js`
+
+# Docker Server
+
+Prereqs:
+
+* [Docker](https://docker.com)
+
+Usage:
+
+* `docker run --rm -it -p 9999:80 andrewmacheret/pun-server`
+
+* `curl localhost:9999`
 
 # Random Pun MOTD
 
 To install the motd updater so you see a new random pun every time you ssh into your server, run:
 
-`sudo motd/setup-motd.sh`
+`sudo motd/setup.sh`
 
 Result:
 

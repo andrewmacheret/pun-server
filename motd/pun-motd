@@ -1,5 +1,3 @@
 #!/bin/bash
 
-pun_script=__PUN_SCRIPT__
-"$pun_script"
-
+curl https://pun.andrewmacheret.com
