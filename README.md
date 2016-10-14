@@ -6,6 +6,8 @@ Output a random pun (from punoftheday.com) by running the following command:
 
 `./pun.py`
 
+See it running at [https://pun.andrewmacheret.com](https://pun.andrewmacheret.com).
+
 Prereqs:
 
 * python
