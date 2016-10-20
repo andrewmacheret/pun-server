@@ -42,6 +42,7 @@ app.get('/' /*, apicache('5 minutes')*/, function(req, res) {
 
   run(punScript, [], function(pun, err) {
     if (err) {
+      err = err.trim();
       console.error(err);
       res.status(500);
       res.send(req.accepts('application/json') ? {"error": err} : err);
