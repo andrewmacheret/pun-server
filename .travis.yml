@@ -50,5 +50,5 @@ after_success:
   - eval "$(ssh-agent -s)"
   - chmod 600 "${TRAVIS_BUILD_DIR}/id_rsa_a1-server"
   - ssh-add "${TRAVIS_BUILD_DIR}/id_rsa_a1-server"
-  - ssh core@servers.andrewmacheret.com "cd ~/servers/a1-servers && docker-compose pull ${SERVICE_NAME} && docker-compose up -d --force-recreate ${SERVICE_NAME} && (docker rmi \$(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null || true)"
-  #- ssh a1@servers.andrewmacheret.com "cd ~/servers/pun-server && git pull && sudo motd/setup.sh"
+  - ssh core@servers.andrewmacheret.com "~/servers/a1-servers/restart-service.sh ${SERVICE_NAME}"
+  #- ssh core@servers.andrewmacheret.com "cd ~/servers/pun-server && git pull && sudo motd/setup.sh"
