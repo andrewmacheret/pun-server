@@ -1,4 +1,9 @@
 {
-  "origin": "https://andrewmacheret.com",
-  "port": 80
+  "port": 80,
+  "origins": [
+    "https://andrewmacheret.com",
+    "http://andrewmacheret.com.s3-website-us-east-1.amazonaws.com",
+    "https://cc.andrewmacheret.com",
+    "http://cc.andrewmacheret.com.s3-website-us-east-1.amazonaws.com"
+  ]
 }
