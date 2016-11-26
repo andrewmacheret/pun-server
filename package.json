@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/andrewmacheret/pun-server#readme",
   "dependencies": {
+    "cors": "^2.8.1",
     "express": "^4.13.4"
   }
 }
